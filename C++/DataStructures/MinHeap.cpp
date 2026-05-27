@@ -17,6 +17,8 @@ private:
 
     // move element upward until heap property is restored; 
     // used after insertion
+    // basically: keep swapping the new element with its parent while it is smaller than parent
+    // complexity: O(log n) because the heap height is log n
     void heapify_up(int index)
     {
         while (index > 0)
@@ -36,6 +38,8 @@ private:
 
     // move element downward until heap property is restored; 
     // used after removing minimum element
+    // basically: keep swapping the current node with its smaller child while the child is smaller
+    // complexity: O(log n) because the heap height is log n
     void heapify_down(int index)
     {
         int n = heap.size();
@@ -72,6 +76,7 @@ private:
 
 public:
 
+    // complexity: O(log n)
     void push(int value)
     {
         heap.push_back(value);
@@ -79,6 +84,7 @@ public:
         heapify_up(heap.size() - 1);
     }
 
+    // complexity: O(1)
     int top() const
     {
         if (heap.empty()) throw std::runtime_error("Heap is empty!");
@@ -86,6 +92,7 @@ public:
         return heap[0];
     }
 
+    // complexity: O(log n)
     void pop()
     {
         if (heap.empty())
