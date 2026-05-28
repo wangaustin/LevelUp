@@ -6,6 +6,7 @@ Hand-coded solutions and technical post-mortems focused on algorithmic growth an
 2. LeetCode
 3. Data Structures
 4. Multi-Threading
+- [Overview of C++ Multi-Threading Concepts](https://pep-root6.github.io/docs/)
 
 ## Python
 1. TBD
