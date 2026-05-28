@@ -4,6 +4,8 @@ Hand-coded solutions and technical post-mortems focused on algorithmic growth an
 ## C++
 1. OrderBook
 2. LeetCode
+3. Data Structures
+4. Multi-Threading
 
 ## Python
 1. TBD
