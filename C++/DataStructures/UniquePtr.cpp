@@ -15,6 +15,8 @@ public:
     UniquePtr& operator=(const UniquePtr&) = delete;
 
     // 3. move semantics (transfer ownership)
+    // note: double ampersands bind to rvalues only, so the function does not
+    //       silently destroys a named object the caller still thinks is valid
     UniquePtr(UniquePtr&& other) noexcept : ptr(other.ptr)
     {
         other.ptr = nullptr;
@@ -35,5 +37,13 @@ public:
     T& operator*() const { return *ptr; }
     T* operator->() const { return ptr; }
     T* get() const { return ptr; } // access without taking ownership
+
+    // 5. Factory function
+    // note: variadic template that perfect-forwards any arguments to T's constructor
+    template <typename T, typename... Args>
+    UniquePtr<T> MakeUniquePtr(Args&&... args)
+    {
+        return UniquePtr<T>(new T(std::forward<Args>(args)...));
+    }
     
 };
