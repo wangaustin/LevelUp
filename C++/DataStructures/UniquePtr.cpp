@@ -21,6 +21,29 @@ public:
     {
         other.ptr = nullptr;
     }
+    /**
+     * Example of what could go wrong if you used Unique& instead of UniquePtr&&
+     * if you take a lvalue reference, when you do other.ptr = nullptr,
+     * you're silently stealing data from a named object
+     * 
+     * void process_data(UniquePtr p) { // do something with pointer }
+     * 
+     * int main()
+     * {
+     *      UniquePtr original(new int(42));
+     * 
+     *      // you want to pass 'original' to a function
+     *      // and because it takes a regular reference, this compiles,
+     *      // BUT!!!
+     *      process_data(original);
+     * 
+     *      // CRASH!!! 'original' was silently emptied inside constructor
+     *      // original is now nullptr, and you get undefined behavior
+     *      std::cout << *original << std::endl;
+     * }
+     * 
+     * 
+     */
 
     UniquePtr& operator=(UniquePtr& other) noexcept
     {

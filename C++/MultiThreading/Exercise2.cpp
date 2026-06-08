@@ -10,7 +10,7 @@ void threadFunc()
 {
     for (int i = 0; i < 5000; ++i)
     {
-        ++counter;
+        counter.fetch_add(1, std::memory_order_relaxed);
     }
 }
 
