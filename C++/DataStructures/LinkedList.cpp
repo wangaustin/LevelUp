@@ -45,6 +45,8 @@ public:
         copy_from(other); // private helper function
     }
 
+    // copy assignment operator
+    // replaces this list with a deep copy of another list
     LinkedList& operator=(const LinkedList& other)
     {
         if (this == &other)
@@ -52,8 +54,12 @@ public:
             return *this;
         }
 
+        // make a copy, if copying throws, this object is unchanged
         LinkedList temp(other);
         swap(temp); // public helper function
+
+        // when temp goes out of scope, its destructor deletes old nodes
+        return *this;
     }
 
     // moves another list into this list
@@ -123,6 +129,7 @@ public:
         node->next = head_;
         head_ = node;
 
+        // if list was empty, this node is also the tail
         if (tail_ == nullptr)
         {
             tail_ = node;
@@ -136,11 +143,12 @@ public:
     {
         Node* node = new Node(value);
 
+        // empty list case
         if (tail_ == nullptr)
         {
             head_ = tail_ = node;
         }
-        else
+        else // non-empty list case
         {
             tail_->next = node;
             tail_ = node;
@@ -163,6 +171,7 @@ public:
 
         --size;
 
+        // if list became empty, tail must also be null
         if (head_ == nullptr)
         {
             tail_ = nullptr;
@@ -194,6 +203,7 @@ public:
             return false;
         }
 
+        // special case: removing the head
         if (head->value == value)
         {
             pop_front();
@@ -207,8 +217,10 @@ public:
         {
             if (cur->value == value)
             {
+                // bypass cur
                 prev->next = cur->next;
 
+                // if we removed the tail, move tail back to prev
                 if (cur == tail_)
                 {
                     tail_ = prev;
